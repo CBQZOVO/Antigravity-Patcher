@@ -15,16 +15,23 @@ Antigravity 的地区限制有两层，只有第一层能本地解决：
 
 | 文件 | 用途 |
 |---|---|
-| `ag_patcher_zh.sh` | 补丁工具（中文版，源自 [Quenary/antigravity-patcher](https://github.com/Quenary/antigravity-patcher)）。自动扫描并补丁 `~/.local/bin/agy`、`~/.gemini/bin/agy`、Antigravity.app 内 `language_server` 等目标，macOS 上自动 ad-hoc 重签名 |
+| `ag_patcher_zh.sh` | 补丁工具·macOS/Linux 中文版（源自 [Quenary/antigravity-patcher](https://github.com/Quenary/antigravity-patcher)）。自动扫描并补丁 `~/.local/bin/agy`、`~/.gemini/bin/agy`、Antigravity.app 内 `language_server` 等目标，macOS 上自动 ad-hoc 重签名 |
+| `ag_patcher.ps1` | 补丁工具·Windows 版（上游同源，与 sh 版签名逻辑同步，文案已汉化）。已审查：纯本地、无网络、字节级替换；**未实测**（无 Windows 环境）。PS 5.1 按 UTF-8 BOM 读取，勿去掉文件头 BOM |
 | `agyx` | CLI 启动器：设置 `AGY_CLI_DISABLE_AUTO_UPDATE=1`（防更新覆盖补丁）后透传参数给 `agy` |
 
 ## 日常使用
 
 ```sh
-# CLI（首次运行会用浏览器登录 Google 账号）
+# macOS / Linux CLI（首次运行会用浏览器登录 Google 账号）
 ~/Workspaces/01-codespaces/experimental/Agy/agyx
 
 # 桌面端 / CodeBuddy 扩展面板：直接打开，登录一次即可
+```
+
+Windows 下用 PowerShell（不支持 `Antigravity.exe` 主程序和 `app.asar`，只补 `agy.exe`/`language_server*`）：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\ag_patcher.ps1 patch
 ```
 
 ## 维护（重要）
