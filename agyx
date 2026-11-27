@@ -1,0 +1,16 @@
+#!/bin/sh
+# agyx — Antigravity CLI 启动器（配合 antigravity-patcher 使用）
+#
+# 背景：agy 默认 oauth 登录后，客户端本地执行资格检查，地区不支持时锁定交互并
+#       拒绝 print 模式。用 patch_antigravity.py 对 ~/.local/bin/agy 打补丁后，
+#       由本脚本启动并禁用自动更新（防止更新覆盖补丁）。
+#
+# 如需还原：cp ~/.local/bin/agy.bak ~/.local/bin/agy
+
+AGY_BIN="${AGY_BIN:-$(command -v agy 2>/dev/null || echo "$HOME/.local/bin/agy")}"
+
+# 防止自动更新覆盖补丁
+export AGY_CLI_DISABLE_AUTO_UPDATE=1
+
+exec "$AGY_BIN" "$@"
+
